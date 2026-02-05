@@ -8,9 +8,9 @@ namespace GLink.Common.Structs;
 public partial struct ParamUnion
 {
     [FieldOffset(0)] public uint UInt;
-    [FieldOffset(0)] public float Float;
-    [FieldOffset(0)] public bool Bool;
-    [FieldOffset(0)] public uint Enum;
-    [FieldOffset(0)] public uint StringOffset;
-    [FieldOffset(0)] public byte Bitfield;
+    [FieldOffset(0)] [field: DoNotReverse] public float Float;
+    [FieldOffset(0)] [field: DoNotReverse] public bool Bool;
+    [FieldOffset(0)] [field: DoNotReverse] public uint Enum;
+    [FieldOffset(0)] [field: DoNotReverse] public uint StringOffset;
+    [FieldOffset(0)] [field: DoNotReverse] public byte Bitfield;
 }

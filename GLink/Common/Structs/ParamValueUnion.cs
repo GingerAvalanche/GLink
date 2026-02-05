@@ -14,9 +14,9 @@ namespace GLink.Common.Structs;
 public partial struct ParamValueUnion
 {
     [field: FieldOffset(0)] public uint UInt;
-    [field: FieldOffset(0)] public float Float;
-    [field: FieldOffset(0)] public int Bool;
-    [field: FieldOffset(0)] public int Enum;
+    [field: FieldOffset(0)] [field: DoNotReverse] public float Float;
+    [field: FieldOffset(0)] [field: DoNotReverse] public int Bool;
+    [field: FieldOffset(0)] [field: DoNotReverse] public int Enum;
     //[field: FieldOffset(0)] public int StringOffset; // handled by ResParam.String()
     //[field: FieldOffset(0)] public int BitField; // handled by ResParam.Bitfield()
 }
