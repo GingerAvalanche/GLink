@@ -7,7 +7,7 @@ using Revrs.Attributes;
 namespace GLink.Immutable;
 
 [Reversable]
-[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 32)]
+[StructLayout(LayoutKind.Explicit, Size = 32)]
 public partial struct ResAssetCallTable
 {
     [FieldOffset(0)] private ConvertibleInt keyOffset;

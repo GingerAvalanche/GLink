@@ -5,7 +5,7 @@ using Revrs.Attributes;
 namespace GLink.Immutable;
 
 [Reversable]
-[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 24)]
+[StructLayout(LayoutKind.Explicit, Size = 24)]
 public partial struct ResActionTrigger
 {
     [FieldOffset(0)] public ConvertibleInt guId;

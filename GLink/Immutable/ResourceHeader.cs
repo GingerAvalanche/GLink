@@ -7,7 +7,7 @@ using Revrs.Attributes;
 namespace GLink.Immutable;
 
 [Reversable]
-[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 72)]
+[StructLayout(LayoutKind.Explicit, Size = 72)]
 public partial struct ResourceHeader
 {
     [FieldOffset(0)] private byte magic0;

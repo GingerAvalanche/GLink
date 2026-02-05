@@ -6,7 +6,7 @@ using Revrs.Attributes;
 namespace GLink.Immutable;
 
 [Reversable]
-[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 20)]
+[StructLayout(LayoutKind.Explicit, Size = 20)]
 public partial struct ResCurveCallTable
 {
     [FieldOffset(0)] public ConvertibleShort curvePointStartPos;

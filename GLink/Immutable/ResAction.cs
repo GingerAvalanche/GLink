@@ -6,7 +6,7 @@ using Revrs.Attributes;
 namespace GLink.Immutable;
 
 [Reversable]
-[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 8)]
+[StructLayout(LayoutKind.Explicit, Size = 8)]
 public partial struct ResAction
 {
     [FieldOffset(0)] public ConvertibleInt namePos;
