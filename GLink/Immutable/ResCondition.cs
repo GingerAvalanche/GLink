@@ -5,7 +5,7 @@ using Revrs.Attributes;
 
 namespace GLink.Immutable;
 
-[StructLayout(LayoutKind.Explicit)]
+[StructLayout(LayoutKind.Explicit, Size = 20)]
 public readonly struct ResCondition
 {
     [FieldOffset(0)]
