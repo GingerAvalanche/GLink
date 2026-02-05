@@ -1,13 +1,15 @@
 using System.Runtime.InteropServices;
+using Revrs.Attributes;
 
 namespace GLink.Common.Structs;
 
 // Used when you really, really DGAF whether it's signed or not
+[Reversable]
 [StructLayout(LayoutKind.Explicit, Size = 2, Pack = 2)]
-public struct ConvertibleShort : IEquatable<ConvertibleShort>
+public partial struct ConvertibleShort : IEquatable<ConvertibleShort>
 {
     [field: FieldOffset(0)] public short Short { get; set; }
-    [field: FieldOffset(0)] public ushort UShort { get; set; }
+    [field: FieldOffset(0)] [field: DoNotReverse] public ushort UShort { get; set; }
 
     private ConvertibleShort(short value) => Short = value;
     private ConvertibleShort(ushort value) => UShort = value;

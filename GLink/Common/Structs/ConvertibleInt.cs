@@ -1,13 +1,15 @@
 using System.Runtime.InteropServices;
+using Revrs.Attributes;
 
 namespace GLink.Common.Structs;
 
 // Used when you really, really DGAF whether it's signed or not
+[Reversable]
 [StructLayout(LayoutKind.Explicit, Size = 4, Pack = 4)]
-public struct ConvertibleInt : IEquatable<ConvertibleInt>
+public partial struct ConvertibleInt : IEquatable<ConvertibleInt>
 {
     [field: FieldOffset(0)] public int Int { get; set; }
-    [field: FieldOffset(0)] public uint UInt { get; set; }
+    [field: FieldOffset(0)] [field: DoNotReverse] public uint UInt { get; set; }
 
     private ConvertibleInt(int value) => Int = value;
     private ConvertibleInt(uint value) => UInt = value;
