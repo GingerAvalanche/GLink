@@ -29,9 +29,15 @@ public readonly unsafe struct ContainerTable
     public ResContainerParam GetContainer(int index)
     {
         var container = *(ResContainerParam*)table[index];
-        if (container.type is ContainerType.Switch) throw new InvalidCastException();
-        if (container.type > ContainerType.Asset) ResContainerParam.Reverse(new Span<byte>(table[index], 12));
-        // I'ma be mad if this check fails
+        switch (container.type)
+        {
+            case ContainerType.Switch:
+                throw new InvalidCastException();
+            case > ContainerType.Asset:
+                ResContainerParam.Reverse(new Span<byte>(table[index], 12));
+                break;
+        }
+        // I'm gonna be mad if this check fails
         return container.type > ContainerType.Asset ? throw new InvalidOperationException() : container;
     }
 
@@ -39,8 +45,10 @@ public readonly unsafe struct ContainerTable
     {
         var container = *(ResContainerParamSwitch*)table[index];
         if (container.type is not ContainerType.Switch) throw new InvalidCastException();
+        // We're making a bold assumption, here, that the end index is never 0. It should be a safe assumption, though
+        // as switch containers are supposed to switch between two children, and so the smallest end index should be 1
         if (container.childrenEndIndex > 0xFFFF) ResContainerParamSwitch.Reverse(new Span<byte>(table[index], 24));
-        // I'ma be mad if this check fails
+        // I'm gonna be mad if this check fails
         return container.childrenEndIndex > 0xFFFF ? throw new InvalidOperationException() : container;
     }
 }

@@ -10,6 +10,8 @@ namespace GLink.Immutable;
 public partial struct ResContainerParam
 {
     [FieldOffset(0)] public ContainerType type;
-    [FieldOffset(4)] public ConvertibleInt childrenStartIndex; // TODO: Figure out what "children" refers to
-    [FieldOffset(8)] public ConvertibleInt childrenEndIndex; // TODO: Make accessor for children
+    [FieldOffset(4)] internal ConvertibleInt childrenStartIndex;
+    [FieldOffset(8)] internal ConvertibleInt childrenEndIndex;
+    
+    public Span<ResAssetCallTable> AssetCalls(ref Span<ResAssetCallTable> table) => table[childrenStartIndex..childrenEndIndex];
 }

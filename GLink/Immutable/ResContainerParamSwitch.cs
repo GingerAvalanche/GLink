@@ -11,14 +11,15 @@ namespace GLink.Immutable;
 public partial struct ResContainerParamSwitch
 {
     [FieldOffset(0)] public ContainerType type;
-    [FieldOffset(4)] public ConvertibleInt childrenStartIndex; // TODO: Figure out what "children" refers to
-    [FieldOffset(8)] public ConvertibleInt childrenEndIndex; // TODO: Make accessor for children
-    [FieldOffset(12)] public ConvertibleInt watchPropertyNamePos;
-    [FieldOffset(16)] public ConvertibleInt watchPropertyId;
-    [FieldOffset(20)] public ConvertibleShort localPropertyNameIdx;
+    [FieldOffset(4)] internal ConvertibleInt childrenStartIndex;
+    [FieldOffset(8)] internal ConvertibleInt childrenEndIndex;
+    [FieldOffset(12)] private ConvertibleInt watchPropertyNamePos;
+    [FieldOffset(16)] public ConvertibleInt watchPropertyId; // TODO: Figure out what this is
+    [FieldOffset(20)] private ConvertibleShort localPropertyNameIdx;
     [FieldOffset(22)] public bool isGlobal;
     [FieldOffset(23)] private byte _padding;
     
+    public Span<ResAssetCallTable> AssetCalls(ref Span<ResAssetCallTable> table) => table[childrenStartIndex..childrenEndIndex];
     public string WatchPropName(StringTable table) => table.GetByOffset(watchPropertyNamePos);
     public string LocalWatchPropName(StringTable table) => table[localPropertyNameIdx];
 }
