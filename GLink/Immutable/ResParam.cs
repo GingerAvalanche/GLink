@@ -23,7 +23,7 @@ public partial struct ResParam
     /// </summary>
     public ParamValueUnion Direct(ref Span<ParamValueUnion> table) => Type == ReferenceType.Direct ? table[Offset] : throw new InvalidCastException();
     public string String(ref StringTable table) => Type == ReferenceType.String ? table.GetByOffset(Offset) : throw new InvalidCastException();
-    // TODO: Curve
+    public ResCurveCallTable Curve(ref Span<ResCurveCallTable> table) => Type == ReferenceType.Curve ? table[Offset] : throw new InvalidCastException();
     public ResRandomCallTable Random(ref Span<ResRandomCallTable> table) => Type == ReferenceType.Random ? table[Offset] : throw new InvalidCastException();
     // TODO: ArrangeParam
     public byte Bitfield() => Type == ReferenceType.Bitfield ? (byte)(Offset & 0xFF) : throw new InvalidCastException();
