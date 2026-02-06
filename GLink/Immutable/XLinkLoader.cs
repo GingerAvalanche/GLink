@@ -33,7 +33,7 @@ public ref struct XLinkLoader
             throw new FormatException($"Invalid XLink resource header: {header.Magic}");
         }
         
-        if (Enum.IsDefined(header.version))
+        if (!Enum.IsDefined(header.version))
         {
             throw new FormatException($"Unsupported XLink version: {header.version}");
         }
