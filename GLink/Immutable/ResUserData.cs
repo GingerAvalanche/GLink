@@ -26,12 +26,12 @@ public ref struct ResUserData
     public ResUserData(ref RevrsReader reader, int numUserParam)
     {
         var addressOfThis = reader.Position;
-        header = reader.Read<ResUserHeader>();
+        header = reader.ReadStruct<ResUserHeader>();
         var containerEnd = addressOfThis + header.triggerTablePos.Int;
         
-        localPropertyNameRefIndices = reader.ReadSpan<ConvertibleInt>(header.numLocalProperty);
+        localPropertyNameRefIndices = reader.ReadStructSpan<ConvertibleInt>(header.numLocalProperty);
         userParamTable = reader.ReadStructSpan<ResParam>(numUserParam);
-        sortedIdAssetCallTable = reader.ReadSpan<ConvertibleShort>(header.numCallTable);
+        sortedIdAssetCallTable = reader.ReadStructSpan<ConvertibleShort>(header.numCallTable);
         reader.Align(4);
         assetCallTable = reader.ReadStructSpan<ResAssetCallTable>(header.numCallTable);
         

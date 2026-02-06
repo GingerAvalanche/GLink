@@ -39,8 +39,8 @@ public ref struct XLinkLoader
             throw new FormatException($"Unsupported XLink version: {header.version}");
         }
         
-        userHashes = reader.ReadSpan<ConvertibleInt>(header.numUser);
-        userOffsets = reader.ReadSpan<ConvertibleInt>(header.numUser);
+        userHashes = reader.ReadStructSpan<ConvertibleInt>(header.numUser);
+        userOffsets = reader.ReadStructSpan<ConvertibleInt>(header.numUser);
         
         resParamDefineTable = new ResParamDefineTable(ref reader);
         
@@ -70,9 +70,9 @@ public ref struct XLinkLoader
         curveTable = reader.ReadStructSpan<ResCurveCallTable>(header.numCurveTable);
         curvePointTable = reader.ReadStructSpan<CurvePoint>(header.numCurvePointTable);
         
-        userData = new UserTable(ref reader, header.conditionTablePos - header.exRegionPos, header.numUser);
+        userData = new UserTable(ref reader, header.exRegionPos, header.conditionTablePos, resParamDefineTable.numUserParam);
         
-        conditionTable = new ConditionTable(ref reader, header.conditionTablePos - header.conditionTablePos);
+        conditionTable = new ConditionTable(ref reader, header.nameTablePos - header.conditionTablePos);
         
         nameTable = new StringTable(reader.Data[reader.Position..]);
     }
