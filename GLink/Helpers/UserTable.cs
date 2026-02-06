@@ -4,15 +4,18 @@ using Revrs;
 namespace GLink.Helpers;
 
 // I hate this. I hate everything about this
-public readonly ref struct UserTable(ref RevrsReader reader, int length, int numUserParam)
+public readonly unsafe ref struct UserTable(ref RevrsReader reader, int start, int end, int numUserParam)
 {
     private readonly Endianness _endian = reader.Endianness;
-    public Span<byte> Data { get; } = reader.Read(length);
+    public Span<byte> Data { get; } = reader.Data[start..end];
 
-    public ResUserData Get(ref RevrsReader reader, int offset)
+    public ResUserData Get(int offset)
     {
-        reader.Position = offset;
-        reader.Endianness = _endian;
+        RevrsReader reader = new RevrsReader(Data)
+        {
+            Position = offset - start,
+            Endianness = _endian
+        };
         return new ResUserData(ref reader, numUserParam);
     }
 }
