@@ -3,7 +3,7 @@ using Revrs.Attributes;
 
 namespace GLink.Common.Structs;
 
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 4)]
 public partial struct ParamUnion
 {

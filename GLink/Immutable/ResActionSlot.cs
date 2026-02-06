@@ -5,7 +5,7 @@ using Revrs.Attributes;
 
 namespace GLink.Immutable;
 
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public partial struct ResActionSlot
 {

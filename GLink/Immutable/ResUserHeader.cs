@@ -4,7 +4,7 @@ using Revrs.Attributes;
 
 namespace GLink.Immutable;
 
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 48)]
 public partial struct ResUserHeader
 {

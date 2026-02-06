@@ -2,7 +2,7 @@ using Revrs.Attributes;
 
 namespace GLink.Common.Structs;
 
-[Reversable]
+[Reversible]
 public partial struct CurvePoint(float x, float y)
 {
     public float X = x;

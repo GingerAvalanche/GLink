@@ -4,7 +4,7 @@ using Revrs.Attributes;
 namespace GLink.Common.Structs;
 
 // Used when you really, really DGAF whether it's signed or not
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Size = 4, Pack = 4)]
 public partial struct ConvertibleInt : IEquatable<ConvertibleInt>
 {

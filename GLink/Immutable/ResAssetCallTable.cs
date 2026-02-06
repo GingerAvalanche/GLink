@@ -1,12 +1,11 @@
 using System.Runtime.InteropServices;
-using GLink.Common.Enums;
 using GLink.Common.Structs;
 using GLink.Helpers;
 using Revrs.Attributes;
 
 namespace GLink.Immutable;
 
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public partial struct ResAssetCallTable
 {

@@ -6,7 +6,7 @@ using Revrs.Attributes;
 
 namespace GLink.Immutable;
 
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Size = 24)]
 public partial struct ResContainerParamSwitch
 {

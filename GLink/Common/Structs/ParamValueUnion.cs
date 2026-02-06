@@ -9,7 +9,7 @@ namespace GLink.Common.Structs;
 ///
 /// <para>If you're coming from a userParam: Span{ResParam} then just use the index inside userParam</para>
 /// </summary>
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 4)]
 public partial struct ParamValueUnion
 {

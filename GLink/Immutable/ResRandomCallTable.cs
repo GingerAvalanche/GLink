@@ -3,7 +3,7 @@ using Revrs.Attributes;
 
 namespace GLink.Immutable;
 
-[Reversable]
+[Reversible]
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 8)]
 public partial struct ResRandomCallTable(float min, float max)
 {
