@@ -1,5 +1,6 @@
 using GLink.Common.Structs;
 using GLink.Helpers;
+using Revrs;
 
 namespace GLink.Immutable;
 
@@ -25,7 +26,7 @@ public ref struct XLinkLoader
     //public NameTable nameTable;
     public StringTable nameTable;
 
-    public XLinkLoader(ref XLinkReader reader)
+    public XLinkLoader(ref RevrsReader reader)
     {
         header = reader.ReadStruct<ResourceHeader>();
         if (header.Magic != Magic)

@@ -14,7 +14,7 @@ public readonly unsafe struct ResAssetParam
     private readonly ResParam* paramPtr;
     private readonly int count;
 
-    public ResAssetParam(ref XLinkReader reader)
+    public ResAssetParam(ref RevrsReader reader)
     {
         mask = reader.Read<ulong>();
         count = mask.OneBits();

@@ -4,7 +4,7 @@ using Revrs;
 namespace GLink.Helpers;
 
 // I hate this. I hate everything about this
-public readonly ref struct UserTable(ref XLinkReader reader, int length, int numUserParam)
+public readonly ref struct UserTable(ref RevrsReader reader, int length, int numUserParam)
 {
     private readonly Endianness _endian = reader.Endianness;
     public Span<byte> Data { get; } = reader.Read(length);

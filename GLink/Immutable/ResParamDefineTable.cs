@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using GLink.Common.Structs;
 using GLink.Helpers;
+using Revrs;
 
 namespace GLink.Immutable;
 
@@ -18,7 +19,7 @@ public ref struct ResParamDefineTable
     public Span<ResDefaultParam> triggerParams;
     public StringTable stringTable;
 
-    public ResParamDefineTable(ref XLinkReader reader)
+    public ResParamDefineTable(ref RevrsReader reader)
     {
         size = reader.Read<ConvertibleInt>();
         numUserParam = reader.Read<ConvertibleInt>();

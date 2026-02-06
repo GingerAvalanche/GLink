@@ -5,7 +5,7 @@ using Revrs;
 
 namespace GLink.Helpers;
 
-public ref struct ConditionTable(ref XLinkReader reader, int length)
+public ref struct ConditionTable(ref RevrsReader reader, int length)
 {
     private Span<byte> _table = reader.Read(length);
     private readonly Endianness _endian = reader.Endianness;

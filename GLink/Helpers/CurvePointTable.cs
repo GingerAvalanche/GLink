@@ -1,4 +1,5 @@
 using GLink.Common.Structs;
+using Revrs;
 
 namespace GLink.Helpers;
 
@@ -7,7 +8,7 @@ public class CurvePointTable
     private readonly CurvePoint[] _curvePoints;
     private readonly uint[] _counts;
 
-    public CurvePointTable(ref XLinkReader reader, uint count)
+    public CurvePointTable(ref RevrsReader reader, uint count)
     {
         _curvePoints = new CurvePoint[count];
         for (var i = 0; i < count; ++i)

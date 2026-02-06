@@ -1,5 +1,6 @@
 using System.IO.Hashing;
 using System.Text;
+using Revrs;
 
 namespace GLink.Helpers;
 
@@ -10,7 +11,7 @@ public class NameTable
     private List<uint> _hashes;
     private List<int> _counts;
 
-    public NameTable(ref XLinkReader reader)
+    public NameTable(ref RevrsReader reader)
     {
         var start = reader.Position;
         _names = [];

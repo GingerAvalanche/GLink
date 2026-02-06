@@ -14,7 +14,7 @@ public readonly unsafe struct ResTriggerOverwriteParam
     private readonly ResParam* paramPtr;
     private readonly int count;
 
-    public ResTriggerOverwriteParam(ref XLinkReader reader)
+    public ResTriggerOverwriteParam(ref RevrsReader reader)
     {
         mask = reader.Read<uint>();
         count = mask.OneBits();
