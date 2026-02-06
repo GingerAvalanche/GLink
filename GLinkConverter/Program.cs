@@ -14,12 +14,12 @@ reader = new(ref rev);
 loader = new(ref reader);
 Console.WriteLine("Loaded WiiU ELink!");
 
-rev = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/actually_switch/SLink2DB.bslnk"));
+rev = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/actually_switch/SLink2DB.bslnk"), Endianness.Little);
 reader = new(ref rev);
 loader = new(ref reader);
 Console.WriteLine("Loaded Switch SLink!");
 
-rev = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/actually_switch/ELink2DB.belnk"));
+rev = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/actually_switch/ELink2DB.belnk"), Endianness.Little);
 reader = new(ref rev);
 loader = new(ref reader);
 Console.WriteLine("Loaded Switch ELink!");
