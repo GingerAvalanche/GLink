@@ -5,45 +5,41 @@ using GLink.Common.Enums;
 using GLink.Immutable;
 using Revrs;
 
+List<string> lines = [];
 RevrsReader reader = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/SLink2DB.bslnk"));
 XLinkLoader loader = new(ref reader);
 Console.WriteLine("Loaded WiiU SLink!");
 for (var i = 0; i < loader.header.numUser; ++i)
 {
     var user = loader.userData.Get(loader.userOffsets[i]);
-    Console.WriteLine($"Loading: {loader.nameTable.GetByHash(loader.userHashes[i])}...");
+    lines.Add($"{loader.nameTable.GetByHash(loader.userHashes[i])} {{");
+    var paramNameTable = loader.resParamDefineTable.stringTable;
     var userDefaults = loader.resParamDefineTable.userParams;
     for (var j = 0; j < userDefaults.Length; ++j)
     {
-        var name = loader.nameTable.GetByOffset(userDefaults[j].namePos);
+        var name = paramNameTable.GetByOffset(userDefaults[j].namePos);
         var param = user.userParamTable[j];
-        string value;
-        switch (userDefaults[j].type)
+        var value = param.Type switch
         {
-            case ParamType.UInt32:
-                value = param.Direct(ref loader.directValueTable).UInt.ToString();
-                break;
-            case ParamType.Float:
-                value = param.Direct(ref loader.directValueTable).Float.ToString(CultureInfo.CurrentCulture);
-                break;
-            case ParamType.Bool:
-                value = param.Direct(ref loader.directValueTable).Bool.ToString();
-                break;
-            case ParamType.Enum:
-                value = param.Direct(ref loader.directValueTable).Enum.ToString();
-                break;
-            case ParamType.String:
-                value = param.String(ref loader.nameTable);
-                break;
-            case ParamType.Bitfield:
-                value = param.Bitfield().ToString(CultureInfo.CurrentCulture);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-        Console.WriteLine($"Param {j} - Name: {name} - Type: {userDefaults[j].type} - Value: {value}");
+            ReferenceType.Direct => userDefaults[j].type switch
+            {
+                ParamType.Int32 => param.Direct(ref loader.directValueTable).Int.ToString(),
+                ParamType.Float => param.Direct(ref loader.directValueTable).Float.ToString(CultureInfo.CurrentCulture),
+                ParamType.Bool => param.Direct(ref loader.directValueTable).Bool.ToString(),
+                ParamType.Enum =>
+                    $"({userDefaults[j].type}) {param.Direct(ref loader.directValueTable).Enum.ToString()}",
+                _ => throw new ArgumentOutOfRangeException()
+            },
+            ReferenceType.String => $"\"{param.String(ref loader.nameTable)}\"",
+            ReferenceType.ArrangeParam => $"({param.Type}) {param}",
+            ReferenceType.Bitfield => $"({param.Type}) {param.Bitfield().ToString(CultureInfo.CurrentCulture)}",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        lines.Add($"    {name}: {value}");
     }
+    lines.Add("}");
 }
+File.WriteAllLines("/home/Ginger/Documents/CemuShit/xlink_test_output.txt", lines);
 
 // reader = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/ELink2DB.belnk"));
 // loader = new(ref reader);
