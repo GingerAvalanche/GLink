@@ -9,10 +9,11 @@ List<string> lines = [];
 RevrsReader reader = new(File.ReadAllBytes("/home/Ginger/Documents/CemuShit/SLink2DB.bslnk"));
 XLinkLoader loader = new(ref reader);
 Console.WriteLine("Loaded WiiU SLink!");
+ref var nameTable = ref loader.nameTable;
 for (var i = 0; i < loader.header.numUser; ++i)
 {
     var user = loader.userData.Get(loader.userOffsets[i]);
-    lines.Add($"{loader.nameTable.GetByHash(loader.userHashes[i])} {{");
+    lines.Add($"{nameTable.GetByHash(loader.userHashes[i])} {{");
     var paramNameTable = loader.resParamDefineTable.stringTable;
     var userDefaults = loader.resParamDefineTable.userParams;
     for (var j = 0; j < userDefaults.Length; ++j)
@@ -30,8 +31,8 @@ for (var i = 0; i < loader.header.numUser; ++i)
                     $"({userDefaults[j].type}) {param.Direct(ref loader.directValueTable).Enum.ToString()}",
                 _ => throw new ArgumentOutOfRangeException()
             },
-            ReferenceType.String => $"\"{param.String(ref loader.nameTable)}\"",
-            ReferenceType.ArrangeParam => $"({param.Type}) {param}",
+            ReferenceType.String => $"\"{param.String(ref nameTable)}\"",
+            ReferenceType.ArrangeParam => $"({param.Type}) {param.ArrangeParams(ref loader.paramGroupTable).ToString(ref nameTable)}",
             ReferenceType.Bitfield => $"({param.Type}) {param.Bitfield().ToString(CultureInfo.CurrentCulture)}",
             _ => throw new ArgumentOutOfRangeException()
         };
