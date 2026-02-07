@@ -19,6 +19,14 @@ public partial struct ResContainerParamSwitch
     [FieldOffset(22)] public bool isGlobal;
     [FieldOffset(23)] private byte _padding;
     
+    public static unsafe implicit operator ResContainerParamSwitch(Span<ResContainerParam> cont)
+    {
+        ResContainerParamSwitch res;
+        fixed (void* p = &cont[0])
+            res = *(ResContainerParamSwitch*)p;
+        return res;
+    }
+    
     public Span<ResAssetCallTable> AssetCalls(ref Span<ResAssetCallTable> table) => table[childrenStartIndex..childrenEndIndex];
     public string WatchPropName(StringTable table) => table.GetByOffset(watchPropertyNamePos);
     public string LocalWatchPropName(StringTable table) => table[localPropertyNameIdx];

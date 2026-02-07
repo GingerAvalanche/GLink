@@ -15,7 +15,7 @@ public ref struct ResUserData
     public Span<ResAssetCallTable> assetCallTable;
     //public Span<ResContainerParam> containerTable;
     // TODO: Make this zero-allocation
-    public ContainerTable containerTable;
+    public ContainerTableNoPtr containerTable;
     public Span<ResActionSlot> resActionSlotTable;
     public Span<ResAction> resActionTable;
     public Span<ResActionTrigger> resActionTriggerTable;
@@ -36,7 +36,7 @@ public ref struct ResUserData
         assetCallTable = reader.ReadStructSpan<ResAssetCallTable>(header.numCallTable);
         
         //containerTable = reader.ReadStructSpan<ResContainerParam>((containerEnd - reader.Position) / 12);
-        containerTable = new ContainerTable(ref reader, containerEnd);
+        containerTable = new ContainerTableNoPtr(ref reader, containerEnd);
         
         resActionSlotTable = reader.ReadStructSpan<ResActionSlot>(header.numResActionSlot);
         resActionTable = reader.ReadStructSpan<ResAction>(header.numResAction);
