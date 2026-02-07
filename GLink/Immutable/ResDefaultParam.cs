@@ -10,7 +10,7 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 12)]
 public partial struct ResDefaultParam
 {
-    [FieldOffset(0)] public ConvertibleInt namePos;
+    [FieldOffset(0)] public IntUnion namePos;
     [FieldOffset(4)] public ParamType type;
     [FieldOffset(8)] public ParamUnion Value;
 

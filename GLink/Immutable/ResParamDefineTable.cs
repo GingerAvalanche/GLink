@@ -8,11 +8,11 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Sequential)]
 public ref struct ResParamDefineTable
 {
-    public ConvertibleInt size;
-    public ConvertibleInt numUserParam;
-    public ConvertibleInt numAssetParam;
-    public ConvertibleInt numUserAssetParam;
-    public ConvertibleInt numTriggerParam;
+    public IntUnion size;
+    public IntUnion numUserParam;
+    public IntUnion numAssetParam;
+    public IntUnion numUserAssetParam;
+    public IntUnion numTriggerParam;
 
     public Span<ResDefaultParam> userParams;
     public Span<ResDefaultParam> assetParams;
@@ -21,11 +21,11 @@ public ref struct ResParamDefineTable
 
     public ResParamDefineTable(ref RevrsReader reader)
     {
-        size = reader.Read<ConvertibleInt>();
-        numUserParam = reader.Read<ConvertibleInt>();
-        numAssetParam = reader.Read<ConvertibleInt>();
-        numUserAssetParam = reader.Read<ConvertibleInt>();
-        numTriggerParam = reader.Read<ConvertibleInt>();
+        size = reader.Read<IntUnion>();
+        numUserParam = reader.Read<IntUnion>();
+        numAssetParam = reader.Read<IntUnion>();
+        numUserAssetParam = reader.Read<IntUnion>();
+        numTriggerParam = reader.Read<IntUnion>();
         
         userParams = reader.ReadStructSpan<ResDefaultParam>(numUserParam);
         assetParams = reader.ReadStructSpan<ResDefaultParam>(numAssetParam);

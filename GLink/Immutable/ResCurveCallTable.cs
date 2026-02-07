@@ -9,16 +9,16 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Size = 20)]
 public partial struct ResCurveCallTable
 {
-    [FieldOffset(0)] public ConvertibleShort curvePointStartPos;
-    [FieldOffset(2)] public ConvertibleShort numPoint;
-    [FieldOffset(4)] public ConvertibleShort curveType;
-    [FieldOffset(6)] public ConvertibleShort isPropGlobal;
-    [FieldOffset(8)] public ConvertibleInt propNameOffset;
-    [FieldOffset(12)] public ConvertibleInt propIdx;
-    [FieldOffset(16)] public ConvertibleShort localPropertyNameIdx;
-    [FieldOffset(18)] private ConvertibleShort _padding;
+    [FieldOffset(0)] private ShortUnion curvePointStartPos;
+    [FieldOffset(2)] private ShortUnion numPoint;
+    [FieldOffset(4)] public ShortUnion curveType; // TODO: This is probably an enum
+    [FieldOffset(6)] public ShortUnion isPropGlobal;
+    [FieldOffset(8)] private IntUnion propNameOffset;
+    [FieldOffset(12)] public IntUnion propIdx; // TODO: What does this property refer to?
+    [FieldOffset(16)] private ShortUnion localPropertyNameIdx;
+    [FieldOffset(18)] private ShortUnion _padding;
 
-    public Span<CurvePoint> GetCallPoints(Span<CurvePoint> points) => points[curvePointStartPos..(curvePointStartPos + numPoint)];
+    public Span<ResCurvePoint> GetCallPoints(Span<ResCurvePoint> points) => points[curvePointStartPos..(curvePointStartPos + numPoint)];
     public string PropName(StringTable table) => table.GetByOffset(propNameOffset);
     public string LocalPropName(StringTable table) => table[propIdx];
 }

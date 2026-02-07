@@ -9,9 +9,9 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public partial struct ResActionSlot
 {
-    [FieldOffset(0)] public ConvertibleInt namePos;
-    [FieldOffset(4)] public ConvertibleShort actionStartIdx;
-    [FieldOffset(6)] public ConvertibleShort actionEndIdx;
+    [FieldOffset(0)] public IntUnion namePos;
+    [FieldOffset(4)] public ShortUnion actionStartIdx;
+    [FieldOffset(6)] public ShortUnion actionEndIdx;
     
     public string Name(StringTable table) => table.GetByOffset(namePos);
     

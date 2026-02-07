@@ -9,10 +9,10 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 16)]
 public partial struct ResProperty
 {
-    [FieldOffset(0)] public ConvertibleInt watchPropertyNamePos;
-    [FieldOffset(4)] public ConvertibleInt isGlobal;
-    [FieldOffset(8)] public ConvertibleInt triggerStartIdx;
-    [FieldOffset(12)] public ConvertibleInt triggerEndIdx;
+    [FieldOffset(0)] public IntUnion watchPropertyNamePos;
+    [FieldOffset(4)] public IntUnion isGlobal;
+    [FieldOffset(8)] public IntUnion triggerStartIdx;
+    [FieldOffset(12)] public IntUnion triggerEndIdx;
     
     public string WatchPropName(StringTable table) => table.GetByOffset(watchPropertyNamePos);
     public Span<ResPropertyTrigger> PropertyTriggers(ref Span<ResPropertyTrigger> table) => table[triggerStartIdx..(triggerEndIdx - triggerStartIdx)];

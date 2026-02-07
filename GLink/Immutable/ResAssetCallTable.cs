@@ -9,20 +9,20 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Size = 32)]
 public partial struct ResAssetCallTable
 {
-    [FieldOffset(0)] private ConvertibleInt keyOffset;
-    [FieldOffset(4)] public ConvertibleShort assetId;
-    [FieldOffset(6)] private ConvertibleShort flag;
-    [FieldOffset(8)] public ConvertibleInt duration;
-    [FieldOffset(12)] public ConvertibleInt parentIndex;
+    [FieldOffset(0)] private IntUnion keyOffset;
+    [FieldOffset(4)] public ShortUnion assetId;
+    [FieldOffset(6)] private ShortUnion flag;
+    [FieldOffset(8)] public IntUnion duration;
+    [FieldOffset(12)] public IntUnion parentIndex;
     
     // WoomLink claims this is a ushort and byte, but
     // that leaves another byte that should be padding
     // but always has a unique value, so it can't be that
-    [FieldOffset(16)] public ConvertibleInt unknown;
+    [FieldOffset(16)] public IntUnion unknown;
     
-    [FieldOffset(20)] private ConvertibleInt keyNameHash;
-    [FieldOffset(24)] private ConvertibleInt paramPos;
-    [FieldOffset(28)] private ConvertibleInt conditionPos;
+    [FieldOffset(20)] private IntUnion keyNameHash;
+    [FieldOffset(24)] private IntUnion paramPos;
+    [FieldOffset(28)] private IntUnion conditionPos;
     
     public bool IsContainer => (flag & 1) == 1;
     
@@ -31,6 +31,6 @@ public partial struct ResAssetCallTable
     public bool IsContainerSwitch(ref ContainerTable table) => IsContainer ? table.IsContainerSwitch(paramPos) : throw new InvalidOperationException();
     public ResContainerParam Container(ref ContainerTable table) => IsContainer ? table.GetContainer(paramPos) : throw new InvalidOperationException();
     public ResContainerParamSwitch ContainerSwitch(ref ContainerTable table) => IsContainer ? table.GetContainerSwitch(paramPos) : throw new InvalidOperationException();
-    public ResAssetParam Param(ref Dictionary<ConvertibleInt, ResAssetParam> table) => !IsContainer ? table[paramPos] : throw new InvalidOperationException();
+    public ResAssetParam Param(ref Dictionary<IntUnion, ResAssetParam> table) => !IsContainer ? table[paramPos] : throw new InvalidOperationException();
     public ResCondition Condition(ConditionTable table) => table.GetByOffset(conditionPos);
 }

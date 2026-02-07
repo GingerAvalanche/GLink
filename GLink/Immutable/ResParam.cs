@@ -14,7 +14,7 @@ public partial struct ResParam
     [FieldOffset(0)] private uint value;
 
     public ReferenceType Type => (ReferenceType)(value >> 24);
-    private ConvertibleInt Offset => value & 0x00FFFFFF;
+    private IntUnion Offset => value & 0x00FFFFFF;
 
     /// <summary>
     /// <para>Once you have the ParamValueUnion, use its index in the Span{ResParam}, count that many 1s into the mask,

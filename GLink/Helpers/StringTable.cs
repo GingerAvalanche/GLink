@@ -17,7 +17,7 @@ public ref struct StringTable(Span<byte> table)
                 throw new IndexOutOfRangeException();
             }
 
-            ConvertibleInt offset = 0;
+            IntUnion offset = 0;
             var count = 0;
             while (count < index)
             {
@@ -33,7 +33,7 @@ public ref struct StringTable(Span<byte> table)
 
     public int Count(byte value) => _table.Count(value);
 
-    public string GetByOffset(ConvertibleInt offset)
+    public string GetByOffset(IntUnion offset)
     {
         if (offset < 0 || offset >= _table.Length) { throw new IndexOutOfRangeException(); }
         if (offset == 0) return Encoding.UTF8.GetString(_table[.._table.IndexOf((byte)0)]);

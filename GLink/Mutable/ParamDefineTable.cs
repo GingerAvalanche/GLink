@@ -5,7 +5,7 @@ namespace GLink.Mutable;
 
 public class ParamDefineTable
 {
-    public ConvertibleInt NumUserAssetParam;
+    public IntUnion NumUserAssetParam;
     public Dictionary<string, DefaultParam> UserParams;
     public Dictionary<string, DefaultParam> AssetParams;
     public Dictionary<string, DefaultParam> TriggerParams;

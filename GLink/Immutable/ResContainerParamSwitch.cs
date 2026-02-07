@@ -11,11 +11,11 @@ namespace GLink.Immutable;
 public partial struct ResContainerParamSwitch
 {
     [FieldOffset(0)] public ContainerType type;
-    [FieldOffset(4)] internal ConvertibleInt childrenStartIndex;
-    [FieldOffset(8)] internal ConvertibleInt childrenEndIndex;
-    [FieldOffset(12)] private ConvertibleInt watchPropertyNamePos;
-    [FieldOffset(16)] public ConvertibleInt watchPropertyId; // TODO: Figure out what this is
-    [FieldOffset(20)] private ConvertibleShort localPropertyNameIdx;
+    [FieldOffset(4)] internal IntUnion childrenStartIndex;
+    [FieldOffset(8)] internal IntUnion childrenEndIndex;
+    [FieldOffset(12)] private IntUnion watchPropertyNamePos;
+    [FieldOffset(16)] public IntUnion watchPropertyId; // TODO: Figure out what this is
+    [FieldOffset(20)] private ShortUnion localPropertyNameIdx;
     [FieldOffset(22)] public bool isGlobal;
     [FieldOffset(23)] private byte _padding;
     

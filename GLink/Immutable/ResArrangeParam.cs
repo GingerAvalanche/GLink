@@ -9,7 +9,7 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Size = 8)]
 public partial struct ResArrangeParam
 {
-    [FieldOffset(0)] private ConvertibleInt _namePos;
+    [FieldOffset(0)] private IntUnion _namePos;
     [FieldOffset(4)] public byte unk4;
     [FieldOffset(5)] public byte unk5;
     [FieldOffset(6)] [DoNotReverse] private ushort _padding;

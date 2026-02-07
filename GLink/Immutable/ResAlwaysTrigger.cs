@@ -8,12 +8,12 @@ namespace GLink.Immutable;
 [StructLayout(LayoutKind.Explicit, Size = 16)]
 public partial struct ResAlwaysTrigger
 {
-    [FieldOffset(0)] public ConvertibleInt guId;
-    [FieldOffset(4)] private ConvertibleInt assetCallTablePos;
-    [FieldOffset(8)] public ConvertibleShort flag;
-    [FieldOffset(10)] public ConvertibleShort overwriteHash; // TODO: Figure out what a ushort hash could be for
-    [FieldOffset(12)] private ConvertibleInt overwriteParamPos;
+    [FieldOffset(0)] public IntUnion guId;
+    [FieldOffset(4)] private IntUnion assetCallTablePos;
+    [FieldOffset(8)] public ShortUnion flag;
+    [FieldOffset(10)] public ShortUnion overwriteHash; // TODO: Figure out what a ushort hash could be for
+    [FieldOffset(12)] private IntUnion overwriteParamPos;
 
     public unsafe ResAssetCallTable AssetCall(ref Span<ResAssetCallTable> table) => table[assetCallTablePos / sizeof(ResAssetCallTable)];
-    public ResTriggerOverwriteParam OverwriteParam(ref Dictionary<ConvertibleInt, ResTriggerOverwriteParam> table) => table[overwriteParamPos];
+    public ResTriggerOverwriteParam OverwriteParam(ref Dictionary<IntUnion, ResTriggerOverwriteParam> table) => table[overwriteParamPos];
 }

@@ -9,9 +9,9 @@ namespace GLink.Immutable;
 public ref struct ResUserData
 {
     public ResUserHeader header;
-    public Span<ConvertibleInt> localPropertyNameRefIndices;
+    public Span<IntUnion> localPropertyNameRefIndices;
     public Span<ResParam> userParamTable;
-    public Span<ConvertibleShort> sortedIdAssetCallTable;
+    public Span<ShortUnion> sortedIdAssetCallTable;
     public Span<ResAssetCallTable> assetCallTable;
     //public Span<ResContainerParam> containerTable;
     // TODO: Make this zero-allocation
@@ -29,9 +29,9 @@ public ref struct ResUserData
         header = reader.ReadStruct<ResUserHeader>();
         var containerEnd = addressOfThis + header.triggerTablePos.Int;
         
-        localPropertyNameRefIndices = reader.ReadStructSpan<ConvertibleInt>(header.numLocalProperty);
+        localPropertyNameRefIndices = reader.ReadStructSpan<IntUnion>(header.numLocalProperty);
         userParamTable = reader.ReadStructSpan<ResParam>(numUserParam);
-        sortedIdAssetCallTable = reader.ReadStructSpan<ConvertibleShort>(header.numCallTable);
+        sortedIdAssetCallTable = reader.ReadStructSpan<ShortUnion>(header.numCallTable);
         reader.Align(4);
         assetCallTable = reader.ReadStructSpan<ResAssetCallTable>(header.numCallTable);
         
