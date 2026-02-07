@@ -13,7 +13,7 @@ namespace GLink.Common.Structs;
 [StructLayout(LayoutKind.Explicit, Pack = 4, Size = 4)]
 public partial struct ParamValueUnion
 {
-    [field: FieldOffset(0)] public uint UInt;
+    [field: FieldOffset(0)] public int Int;
     [field: FieldOffset(0)] [field: DoNotReverse] public float Float;
     [field: FieldOffset(0)] [field: DoNotReverse] public int Bool;
     [field: FieldOffset(0)] [field: DoNotReverse] public int Enum;
