@@ -21,11 +21,11 @@ public ref struct ResParamDefineTable
 
     public ResParamDefineTable(ref RevrsReader reader)
     {
-        size = reader.Read<IntUnion>();
-        numUserParam = reader.Read<IntUnion>();
-        numAssetParam = reader.Read<IntUnion>();
-        numUserAssetParam = reader.Read<IntUnion>();
-        numTriggerParam = reader.Read<IntUnion>();
+        size = reader.ReadStruct<IntUnion>();
+        numUserParam = reader.ReadStruct<IntUnion>();
+        numAssetParam = reader.ReadStruct<IntUnion>();
+        numUserAssetParam = reader.ReadStruct<IntUnion>();
+        numTriggerParam = reader.ReadStruct<IntUnion>();
         
         userParams = reader.ReadStructSpan<ResDefaultParam>(numUserParam);
         assetParams = reader.ReadStructSpan<ResDefaultParam>(numAssetParam);
