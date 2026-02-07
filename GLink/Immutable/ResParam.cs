@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using GLink.Common.Enums;
 using GLink.Common.Structs;
 using GLink.Helpers;
+using Revrs;
 using Revrs.Attributes;
 
 namespace GLink.Immutable;
@@ -25,6 +26,14 @@ public partial struct ResParam
     public string String(ref StringTable table) => Type == ReferenceType.String ? table.GetByOffset(Offset) : throw new InvalidCastException();
     public ResCurveCallTable Curve(ref Span<ResCurveCallTable> table) => Type == ReferenceType.Curve ? table[Offset] : throw new InvalidCastException();
     public ResRandomCallTable Random(ref Span<ResRandomCallTable> table) => Type == ReferenceType.Random ? table[Offset] : throw new InvalidCastException();
-    public void ArrangeParam() => throw new NotImplementedException();
+    public unsafe ResArrangeParamGroup ArrangeParams(ref Span<byte> exRegion)
+    {
+        if (Type != ReferenceType.ArrangeParam) throw new InvalidCastException();
+        RevrsReader reader = new(exRegion)
+        {
+            Position = Offset
+        };
+        return new ResArrangeParamGroup(ref reader);
+    }
     public byte Bitfield() => Type == ReferenceType.Bitfield ? (byte)(Offset & 0xFF) : throw new InvalidCastException();
 }
