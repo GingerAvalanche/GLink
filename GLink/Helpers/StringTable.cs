@@ -1,4 +1,5 @@
 using System.IO.Hashing;
+using System.Text;
 using GLink.Common.Structs;
 
 namespace GLink.Helpers;
@@ -34,15 +35,15 @@ public ref struct StringTable(Span<byte> table)
 
     public string GetByOffset(ConvertibleInt offset)
     {
-        if (offset == 0) return _table.IndexOf((byte)0).ToString();
-        var intOffset = (int)offset;
-        if (offset >= _table.Length) { throw new IndexOutOfRangeException(); }
+        if (offset < 0 || offset >= _table.Length) { throw new IndexOutOfRangeException(); }
+        if (offset == 0) return Encoding.UTF8.GetString(_table[.._table.IndexOf((byte)0)]);
         if (_table[offset - 1] != 0)
         {
             throw new ArgumentException("Offset not at beginning of string");
         }
 
-        return _table[offset.._table[offset..].IndexOf((byte)0)].ToString();
+        var end = offset + _table[offset..].IndexOf((byte)0);
+        return Encoding.UTF8.GetString(_table[offset..end]);
     }
 
     public string GetByHash(uint hash)
@@ -52,14 +53,13 @@ public ref struct StringTable(Span<byte> table)
         var count = 0;
         while (count < total)
         {
-            if (_table[offset++] == 0)
+            if (_table[offset++] != 0) continue;
+            ++count;
+            var end = offset + _table[offset..].IndexOf((byte)0);
+            var possible = _table[offset..end];
+            if (Crc32.HashToUInt32(possible) == hash)
             {
-                ++count;
-                var possible = _table[offset.._table[offset..].IndexOf((byte)0)];
-                if (Crc32.HashToUInt32(possible) == hash)
-                {
-                    return possible.ToString();
-                }
+                return Encoding.UTF8.GetString(possible);
             }
         }
 
