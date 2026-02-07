@@ -26,14 +26,6 @@ public partial struct ResParam
     public string String(ref StringTable table) => Type == ReferenceType.String ? table.GetByOffset(Offset) : throw new InvalidCastException();
     public ResCurveCallTable Curve(ref Span<ResCurveCallTable> table) => Type == ReferenceType.Curve ? table[Offset] : throw new InvalidCastException();
     public ResRandomCallTable Random(ref Span<ResRandomCallTable> table) => Type == ReferenceType.Random ? table[Offset] : throw new InvalidCastException();
-    public unsafe ResArrangeParamGroup ArrangeParams(ref Span<byte> exRegion)
-    {
-        if (Type != ReferenceType.ArrangeParam) throw new InvalidCastException();
-        RevrsReader reader = new(exRegion)
-        {
-            Position = Offset
-        };
-        return new ResArrangeParamGroup(ref reader);
-    }
+    public ResArrangeParamGroup ArrangeParams(ref ParamGroupTable table) => Type == ReferenceType.ArrangeParam ? table.GetByOffset(Offset) : throw new InvalidCastException();
     public byte Bitfield() => Type == ReferenceType.Bitfield ? (byte)(Offset & 0xFF) : throw new InvalidCastException();
 }

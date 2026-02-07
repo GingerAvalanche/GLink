@@ -4,7 +4,7 @@ namespace GLink.Helpers;
 
 public static class RevrsExtensions
 {
-    extension(RevrsReader reader)
+    extension(ref RevrsReader reader)
     {
         public Span<T> ReadUntil<T>(byte delimiter) where T : unmanaged =>
             reader.ReadSpan<T>(reader.Data[reader.Position..].IndexOf(delimiter));

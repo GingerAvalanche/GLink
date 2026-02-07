@@ -15,4 +15,6 @@ public partial struct ResArrangeParam
     [FieldOffset(6)] [DoNotReverse] private ushort _padding;
 
     public string Name(ref StringTable table) => table.GetByOffset(_namePos);
+
+    public string ToString(ref StringTable table) => $"{table.GetByOffset(_namePos)}: {{ unk4: {unk4}, unk5: {unk5} }}";
 }

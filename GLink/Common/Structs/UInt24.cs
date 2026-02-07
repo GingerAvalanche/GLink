@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace GLink.Common.Structs;
 
-[CLSCompliant( isCompliant: false )]
 [StructLayout( LayoutKind.Sequential )]
 public readonly struct UInt24 : IEquatable<UInt24>, IComparable<UInt24>
 {
